@@ -6,30 +6,40 @@ module message_rom (
     output [7:0] data
   );
  
-  wire [7:0] rom_data [7:0];
+  wire [9:0] rom_data [0:7];
+  integer m = 0;
 
 //variable for for loop to rebuild the 8 by 9 array for keyboard input addresses
   genvar j, k;
 //index to bits_to_rom (here the bits_in input)
-  integer m = 0;
+  //genvar m = 0;
 
   reg [7:0] data_d, data_q;
  
   assign data = data_q;
       //assign bits to message_rom
    
- generate
-    for (j = 0; j < 8; j = j + 1) begin:first
-    for (k = 0; k < 8; k = k + 1) begin:second
+ /*generate
+ //integer m;
+ //assign m = 0;
+    for (j = 0; j < 8; j = j + 1) begin:row
+    for (k = 0; k < 8; k = k + 1) begin:column
      assign rom_data[j][k] = bits_in[m];
-     //Verilog doesn't like this m assignment statemetn for some reason
+     //Verilog doesn't like this m assignment statement for some reason
      assign m = m + 1;
       end
       end
-      endgenerate
+      endgenerate*/
+      
+  //alternative method to rebuild the 2d array
+  generate
+  for (j = 0;j < 8; j = j + 1) begin:rebuild_array
+  assign rom_data[j] = bits_in[8 * j + 7:8 * j];
+  end
+  endgenerate
   //assign these at the end of the output    
-  assign rom_data[8] = "\n";
-  assign rom_data[9] = "\r";
+  //assign rom_data[8] = "\n";
+  //assign rom_data[9] = "\r";
  
   always @(*) begin
     if (addr > 4'd9)

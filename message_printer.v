@@ -11,10 +11,12 @@ module message_printer (
   );
   
    //bits is the output to the message_rom module where the data is read to be output into 
-  reg [7:0] bits [7:0];
+  //reg [7:0] bits [7:0];
+  //with alternative for implementation to build then flatten the array
+    reg [7:0] bits [0:7];
   //counter to determine when 8 bits have been input from keyboard
   reg [3:0] ctr_d, ctr_q;
-  reg [71:0] bit_to_rom;
+  wire [63:0] bit_to_rom;
   
   integer check = 0, counter_full = 0,
           i = 0, m = 0;
@@ -80,16 +82,16 @@ module message_printer (
   //if 8 bits have been accepted from the keyboard, reverse the array
   //Really it would be easy to not reverse the array and just output
   //the array in reverse order to gtkterm.
-    bits[0] <= bits[9];
-    bits[1] <= bits[8];
-    bits[2] <= bits[7];
-    bits[3] <= bits[6];
-    bits[4] <= bits[5];
-    bits[5] <= bits[4];
-    bits[6] <= bits[3];
-    bits[7] <= bits[2];
-    bits[8] <= bits[1];
-    bits[9] <= bits[0];
+    bits[0] <= bits[7];
+    bits[1] <= bits[6];
+    bits[2] <= bits[5];
+    bits[3] <= bits[4];
+    bits[4] <= bits[3];
+    bits[5] <= bits[2];
+    bits[6] <= bits[1];
+    bits[7] <= bits[0];
+    //bits[8] <= bits[1];
+    //bits[9] <= bits[0];
     
     //now that array is reversed, increment counter_full once more to allow the state to change to PRINT_MESSAGE below
     counter_full <= 2;      
@@ -127,7 +129,7 @@ module message_printer (
       end
 
 //flatten the array and prep it to be sent to message_rom
- generate
+/* generate
   
   for (j = 0; j < 8; j = j + 1) begin
     for (k = 0; k < 8; k = k + 1) begin
@@ -135,7 +137,15 @@ module message_printer (
     assign m = m + 1;
     end
     end
-endgenerate
+endgenerate */
+
+//another possibility to flatten the array
+  generate
+  
+  for (j = 0; j < 8; j = j + 1) begin
+    assign bit_to_rom[8 * j + 7:8 * j] = bits[j];
+    end
+  endgenerate
  
 endmodule
 
