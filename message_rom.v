@@ -1,7 +1,7 @@
 module message_rom (
     input clk,
     //keyboard input from message_printer module
-    input [71:0] bits_in,
+    input [63:0] bits_in,
     input [3:0] addr,
     output [7:0] data
   );
@@ -15,8 +15,11 @@ module message_rom (
   //genvar m = 0;
 
   reg [7:0] data_d, data_q;
+  
+  //message_printer message_printer (
+  
  
-  assign data = data_q;
+  assign data = data_q; 
  
  //assign bits to rom_data
    
