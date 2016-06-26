@@ -14,12 +14,13 @@ module message_printer (
   //reg [7:0] bits [7:0];
   //with alternative for implementation to build then flatten the array
     reg [7:0] bits [0:7];
+    reg [7:0] bits_copy [0:7];
   //counter to determine when 8 bits have been input from keyboard
   reg [3:0] ctr_d, ctr_q;
   wire [63:0] bit_to_rom;
   
   integer check = 0, counter_full = 0,
-          i = 0, m = 0;
+          i = 0, m = 0, l = 0, p = 0;
   //variables to increment loop to "flatten" 'bits' and put it into bit_to_rom. j = row, k = column          
   genvar j, k;
   
@@ -78,24 +79,8 @@ module message_printer (
       //***my code end***//
         
     //If the counter is full, reverse the array first    
-        if (counter_full) begin
-  //if 8 bits have been accepted from the keyboard, reverse the array
-  //Really it would be easy to not reverse the array and just output
-  //the array in reverse order to gtkterm.
-    bits[0] <= bits[7];
-    bits[1] <= bits[6];
-    bits[2] <= bits[5];
-    bits[3] <= bits[4];
-    bits[4] <= bits[3];
-    bits[5] <= bits[2];
-    bits[6] <= bits[1];
-    bits[7] <= bits[0];
-    //bits[8] <= bits[1];
-    //bits[9] <= bits[0];
-    
-    //now that array is reversed, increment counter_full once more to allow the state to change to PRINT_MESSAGE below
-    counter_full <= 2;      
-    end
+
+
     
     //after array reversal, change state to PRINT_MESSAGE
         if (counter_full == 2) 
@@ -119,16 +104,62 @@ module message_printer (
     if (rst) begin
       state_q <= IDLE;
       ctr_q <= 4'b0;
-    end else begin
+   
+     end else begin
       state_q <= state_d;
-      ctr_q <= ctr_d;
+      ctr_q <= ctr_d; end
+      //*******REVERSE ARRAY BY COPYING IT INTO ANOTHER IN REVERSE ORDER
+     if (counter_full == 1) begin
+       for (p = 0; p < 8; p = p + 1) begin
+    bits_copy[i] <= bits[7 - i];
+     if (p == 8) begin
+    counter_full <= 2;
     end
- 
-    addr_q <= addr_d;
- 
-      end
+    end
+    
+     
+    end
+    
 
-//flatten the array and prep it to be sent to message_rom
+     
+    
+      /*if 8 bits have been accepted from the keyboard, reverse the array
+  //Really it would be easy to not reverse the array and just output
+  //the array in reverse order to gtkterm.  COMPILER SAID IT DOESN'T SUPPORT CONCURRENT AND NON-CONCURRENT OPS ON "bits"
+    bits[0] <= bits[7];
+    bits[1] <= bits[6];
+    bits[2] <= bits[5];
+    bits[3] <= bits[4];
+    bits[4] <= bits[3];
+    bits[5] <= bits[2];
+    bits[6] <= bits[1];
+    bits[7] <= bits[0];
+    //bits[8] <= bits[1];
+    //bits[9] <= bits[0];
+    */
+
+ 
+ /*haven't yet figured out how to reverse bits concurrently so i just copied the input bits into another array in reverse order
+ //this is certainly not the most efficient method but i'm just trying to make things work at the moment   
+ for (l = 0; l < 8; l = l + 1) begin
+  // for (i = 7; i > - 1; i = i - 1) begin
+    i = 7;
+      bits_copy[l] = bits[i];
+     i = i - 1;
+  end
+ 
+  //loop to flatten the array
+    for (j = 0; j < 8; j = j + 1) begin
+     bit_to_rom[8 * j + 7:8 * j] = bits_copy[j];
+    end*/
+ addr_q <= addr_d;   
+    //now that array is reversed, increment counter_full once more to allow the state to change to PRINT_MESSAGE below
+    //counter_full <= 2;      
+    end
+    
+ 
+ 
+ //flatten the array and prep it to be sent to message_rom
 /* generate
   
   for (j = 0; j < 8; j = j + 1) begin
@@ -139,13 +170,7 @@ module message_printer (
     end
 endgenerate */
 
-//another possibility to flatten the array
-  generate
-  
-  for (j = 0; j < 8; j = j + 1) begin
-    assign bit_to_rom[8 * j + 7:8 * j] = bits[j];
-    end
-  endgenerate
+
  
 endmodule
 

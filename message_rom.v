@@ -5,8 +5,8 @@ module message_rom (
     input [3:0] addr,
     output [7:0] data
   );
- 
-  wire [9:0] rom_data [0:7];
+ //changed this to a 10-by-10 instead of 10-by-8 bc compiler kept flagging that line 41 ("assign rom_data[8]...") was out of range. strangely i didn't get that error for line 42.
+  wire [9:0] rom_data [0:9];
   integer m = 0;
 
 //variable for for loop to rebuild the 8 by 9 array for keyboard input addresses
@@ -17,7 +17,8 @@ module message_rom (
   reg [7:0] data_d, data_q;
  
   assign data = data_q;
-      //assign bits to message_rom
+ 
+ //assign bits to rom_data
    
  /*generate
  //integer m;
@@ -31,15 +32,15 @@ module message_rom (
       end
       endgenerate*/
       
-  //alternative method to rebuild the 2d array
+  //alternative method to rebuild the 2d array into rom_data
   generate
   for (j = 0;j < 8; j = j + 1) begin:rebuild_array
   assign rom_data[j] = bits_in[8 * j + 7:8 * j];
   end
   endgenerate
   //assign these at the end of the output    
-  //assign rom_data[8] = "\n";
-  //assign rom_data[9] = "\r";
+  assign rom_data[8][7:0] = "\n";
+  assign rom_data[9][7:0] = "\r";
  
   always @(*) begin
     if (addr > 4'd9)
