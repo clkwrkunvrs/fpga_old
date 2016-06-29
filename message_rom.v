@@ -41,7 +41,9 @@ module message_rom (
   assign rom_data[j] = bits_in[8 * j + 7:8 * j];
   end
   endgenerate
-  //assign these at the end of the output    
+  //assign these at the end of the output 
+  //I had these assigned as [][0:7] which is how it's declared up top but when i build the project it says:
+  //Line 45: Part-select direction is opposite from prefix index direction   
   assign rom_data[8][7:0] = "\n";
   assign rom_data[9][7:0] = "\r";
  

@@ -10,44 +10,35 @@ module message_printer (
     //output [7:0] bit_to_rom
     
   );
-  
+    localparam STATE_SIZE = 1;
+    localparam IDLE = 0,
+    PRINT_MESSAGE = 1;
+ 
+    localparam MESSAGE_LEN = 10; 
    //bits is the output to the message_rom module where the data is read to be output into 
   //reg [7:0] bits [7:0];
   //with alternative for implementation to build then flatten the array
     reg [7:0] bits [0:7];
     reg [7:0] bits_copy [0:7];
-   
-
-  reg [3:0] ctr_d, ctr_q;
-
+    reg [3:0] ctr_d, ctr_q;
+    reg [STATE_SIZE-1:0] state_d, state_q;
+    reg [3:0] addr_d, addr_q;  
   //counter_full determines when 8 bits have been input from keyboard
   //check verifies that keyboard input is a "1" or "0"  
-  integer check = 0, counter_full = 0,
+    integer check = 0, counter_full = 0,
           i = 0, m = 0, l = 0, p = 0, q = 0;
   //variables to increment loop to "flatten" 'bits' and put it into bit_to_rom. j = row, k = column          
-  genvar j, k;
-  
-
-       
-  localparam STATE_SIZE = 1;
-  localparam IDLE = 0,
-    PRINT_MESSAGE = 1;
- 
-  localparam MESSAGE_LEN = 10;
- 
-  reg [STATE_SIZE-1:0] state_d, state_q;
- 
-  reg [3:0] addr_d, addr_q;
+    genvar j, k;
  
   message_rom message_rom (
   .clk(clk),
   .addr(addr_q),
+  //connect the keyboard input of this module to the message_rom "bi
   .bits_in(bit_to_rom),
   .data(tx_data)
   );
  
-  always @(*) begin
-  
+    always @(*) begin
     state_d = state_q; // default values
     addr_d = addr_q;   // needed to prevent latches
     new_tx_data = 1'b0;
@@ -61,25 +52,24 @@ module message_printer (
     if (counter_full == 0)  begin
     
     //if a "1" or "0" is typed in the keybaord, set check to true;
-    if(new_rx_data && rx_data == "0") 
-      check = 1;
-    else if(new_rx_data && rx_data == "1")
-      check = 1;
-    else
-      check = 0;
+    if(new_rx_data && rx_data == "0") check = 1;
+    else if(new_rx_data && rx_data == "1") check = 1;
+    else check = 0;
       
     //when check is true (keyboard input is 1 or 0), store keyboard input bit-by-bit in bit_d      
-    if (check) 
+    if (check) begin 
       bits[i][7:0] = rx_data; 
       i = i + 1;
       ctr_d = ctr_q + 1'b1;
-   end  
+      end
+     end  
     
     //after array reversal, change state to PRINT_MESSAGE and print the keyboard input in reverse order to gtkterm
-        if (counter_full == 1) 
+        if (counter_full == 1) begin 
           state_d = PRINT_MESSAGE;
           //reset counter_full
           counter_full = 0;
+      end
       end
       PRINT_MESSAGE: begin
         if (!tx_busy) begin
@@ -100,7 +90,7 @@ module message_printer (
    
      end else begin
       state_q <= state_d;
-      ctr_q <= ctr_d; end
+      ctr_q <= ctr_d; 
       
       //if the counter is full, i.e. the keyboard has typed 8 1s and 0s, reverse the array then flatten it.  Also set counter_full to 1 and reset the counter. (I know that's counterintuitive but see the always @* block)
      if (ctr_d == 8) begin
@@ -126,6 +116,7 @@ module message_printer (
      bit_to_rom[(8 * p) + 7:8 * p] <= bits_copy[p];
     end*/
     //increment counter once more for sequential logic
+      end
       end
      addr_q <= addr_d; 
       end
