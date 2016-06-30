@@ -1,3 +1,4 @@
+//version 2016-06-30.1
 module message_printer (
     input clk,
     input rst,
@@ -33,7 +34,7 @@ module message_printer (
   message_rom message_rom (
   .clk(clk),
   .addr(addr_q),
-  //connect the keyboard input of this module to the message_rom "bi
+  //connect the keyboard input of this module to the message_rom "bits_in"
   .bits_in(bit_to_rom),
   .data(tx_data)
   );
@@ -58,7 +59,7 @@ module message_printer (
       
     //when check is true (keyboard input is 1 or 0), store keyboard input bit-by-bit in bit_d      
     if (check) begin 
-      bits[i][7:0] = rx_data; 
+      bits[i] = rx_data; 
       i = i + 1;
       ctr_d = ctr_q + 1'b1;
       end

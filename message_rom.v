@@ -1,3 +1,4 @@
+//version 2016-06-30.1
 module message_rom (
     input clk,
     //keyboard input from message_printer module
@@ -6,7 +7,7 @@ module message_rom (
     output [7:0] data
   );
  //changed this to a 10-by-10 instead of 10-by-8 bc compiler kept flagging that line 41 ("assign rom_data[8]...") was out of range. strangely i didn't get that error for line 42.
-  wire [9:0] rom_data [0:9];
+  wire [7:0] rom_data [9:0];
   integer m = 0;
 
 //variable for for loop to rebuild the 8 by 9 array for keyboard input addresses
@@ -44,8 +45,8 @@ module message_rom (
   //assign these at the end of the output 
   //I had these assigned as [][0:7] which is how it's declared up top but when i build the project it says:
   //Line 45: Part-select direction is opposite from prefix index direction   
-  assign rom_data[8][7:0] = "\n";
-  assign rom_data[9][7:0] = "\r";
+  assign rom_data[8] = "\n";
+  assign rom_data[9] = "\r";
  
   always @(*) begin
     if (addr > 4'd9)
