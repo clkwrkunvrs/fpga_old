@@ -7,11 +7,14 @@ module message_printer (
     input tx_busy,
     input [7:0] rx_data,
     input new_rx_data,
-    output reg [63:0] bit_to_rom_d, bit_to_rom_q
+    //need to have one register for output that has its value passed into it by another register
+    output [63:0] bit_to_rom
   );
     localparam STATE_SIZE = 1;
     localparam IDLE = 0,
     PRINT_MESSAGE = 1;
+    
+    reg [63:0] bit_to_rom_d, bit_to_rom_q;
     
  
     localparam MESSAGE_LEN = 10; 
@@ -23,7 +26,7 @@ module message_printer (
   .clk(clk),
   .addr(addr_q),
   //connect the keyboard input of this module to the message_rom "bits_in"
-  .bits_in(bit_to_rom_d),
+  .bits_in(bit_to_rom),
   .data(tx_data)
   );
   
@@ -83,6 +86,8 @@ module message_printer (
       default: state_d = IDLE;
     endcase
   end
+ 
+ assign bit_to_rom = bit_to_rom_d;
  
   always @(posedge clk) begin
     if (rst) begin

@@ -15,7 +15,7 @@ module message_rom (
   //reg [7:0] rom_data_q [9:0];
   reg [3:0] ctr_d, ctr_q;
   reg [7:0] data_d, data_q;
-  reg [63:0] reverse_bits_d, reverse_bits_q;
+  //reg [63:0] reverse_bits_d, reverse_bits_q;
   //reg [3:0] array_d, array_q;
 
 //How can I verify that bits_in has been filled? maybe say if those bits are not null?
@@ -71,16 +71,16 @@ module message_rom (
   assign rom_data[7] = reverse_bits_d[63-:8];*/
  end
  
- assign rom_wire[0] = rom_data_d[0];
- assign rom_wire[1] = rom_data_d[1];
- assign rom_wire[2] = rom_data_d[2];
- assign rom_wire[3] = rom_data_d[3];
- assign rom_wire[4] = rom_data_d[4];
- assign rom_wire[5] = rom_data_d[5];
- assign rom_wire[6] = rom_data_d[6];
- assign rom_wire[7] = rom_data_d[7];
- assign rom_wire[8] = rom_data_d[8];
- assign rom_wire[9] = rom_data_d[9]; 
+ assign rom_wire[0] = rom_data_q[0];
+ assign rom_wire[1] = rom_data_q[1];
+ assign rom_wire[2] = rom_data_q[2];
+ assign rom_wire[3] = rom_data_q[3];
+ assign rom_wire[4] = rom_data_q[4];
+ assign rom_wire[5] = rom_data_q[5];
+ assign rom_wire[6] = rom_data_q[6];
+ assign rom_wire[7] = rom_data_q[7];
+ assign rom_wire[8] = rom_data_q[8];
+ assign rom_wire[9] = rom_data_q[9]; 
   assign data = data_q;
   
   always @(*) begin
