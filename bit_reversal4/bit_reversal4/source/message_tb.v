@@ -18,7 +18,7 @@ module message_tb;
 	 rx_data = "1";
 
 	 //2
-    #100
+    #50
 	 new_rx_data = 1;
     rx_data = "0";
 	 //wait to set the new input flag back to zero after input has been processed.
@@ -26,42 +26,42 @@ module message_tb;
 	 new_rx_data = 0;
 
 	 //3
-	 #100
+	 #50
 	 new_rx_data = 1;
     rx_data = "1";
 	 #1
 	 new_rx_data = 0;
 
 	 //4
-    #100
+    #50
     new_rx_data = 1;
     rx_data = "0";
 	 #1
 	 new_rx_data = 0;
 
 	 //5
-	 #100
+	 #50
 	 new_rx_data = 1;
     rx_data = "1";
 	 #1
 	 new_rx_data = 0;
 
 	 //6
-	 #100
+	 #50
 	 new_rx_data = 1;
 	 rx_data ="0";
 	 #1
 	 new_rx_data = 0;
 
 	 //7
-	 #100
+	 #50
 	 new_rx_data = 1;
 	 rx_data = "1";
 	 #1
 	 new_rx_data = 0;
 
 	 //8
-	 #100
+	 #50
 	 new_rx_data = 1;
 	 rx_data = "0";
 	 #1
@@ -84,7 +84,7 @@ module message_tb;
   wire [3:0] addr;
   wire[3:0] counter;
   wire bytes;
-  //wire [7:0] data;
+  wire [7:0] data;
   wire state;
 
 
@@ -109,14 +109,13 @@ module message_tb;
   );
 
 
-
-  /*message_rom DUT1 (
-	.clk(clk),
-  .data(data)
+message_ram DUT1 (
+	//.clk(clk),
+   .data(data)
   //.byte_in(bytes),
   //.addr(addr),
   //.counter(counter)
-    );*/
+    );
 
 
 

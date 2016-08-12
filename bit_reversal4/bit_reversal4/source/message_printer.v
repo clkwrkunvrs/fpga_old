@@ -39,7 +39,8 @@ message_ram message_ram1 (
   .byte_in(byte_out_q),
   .data(tx_data),
   .counter(counter),
-  .new_rx_data(new_rx_data)
+  .new_rx_data(new_rx_data),
+  .rst(rst)
   );
 
 
@@ -53,10 +54,10 @@ message_ram message_ram1 (
 				//new_tx_data = 1;
 			end
 
-		else if(rx_data == "1")
-		begin
-			byte_out_d = 1;
-			counter_d = counter_q + 1;
+			else if(rx_data == "1")
+			begin
+				byte_out_d = 1;
+				counter_d = counter_q + 1;
 		end
 	end
 
@@ -66,6 +67,9 @@ message_ram message_ram1 (
 		//counter_d = counter_q;
 		//byte_out_d = byte_out_q;
 		addr_d = addr_q;
+		state_d = state_q;
+		new_tx_data = 1'b0;
+		//tx_data = 8'b00000000;
 	end
 
 	if (counter_d == 8 && !tx_busy)
@@ -88,7 +92,7 @@ message_ram message_ram1 (
     end
 	 */end
 
-   
+
 
  assign bit_to_ram = byte_out_d;
 

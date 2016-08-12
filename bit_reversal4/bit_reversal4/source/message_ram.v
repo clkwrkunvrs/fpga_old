@@ -6,7 +6,8 @@ module message_ram (
     input [3:0] addr,
     output [7:0] data,
     input [3:0] counter,
-	 input new_rx_data
+	 input new_rx_data,
+	 input rst
   );
  // wire [7:0] ram_data_q [9:0];
  //registers to store input
@@ -21,7 +22,7 @@ module message_ram (
 
   //THIS BLOCK KEEPS ADDING ALL SIGNALS TO SENSITIVITY LIST BUT I DON'T WANT THEM ALL IN SENSITIVITY LIST
   //when you get a keyboard value, increment a counter and assign those 8 byte (fram byte_in) to a register
-    always @(new_rx_data) begin
+    always @(*) begin
     //if (addr > 1) begin
 	 if (new_rx_data) begin
 	 if (byte_in == 1)
@@ -33,10 +34,19 @@ module message_ram (
     end
 
 	 //define default values
-	 //else
-	 //ram_data_d = ram_data_q;
+	 else if (!new_rx_data) begin
+	 ram_data_d[0] = ram_data_q[0];
+	 ram_data_d[1] = ram_data_q[1];
+	 ram_data_d[2] = ram_data_q[2];
+	 ram_data_d[3] = ram_data_q[3];
+	 ram_data_d[4] = ram_data_q[4];
+	 ram_data_d[5] = ram_data_q[5];
+	 ram_data_d[6] = ram_data_q[6];
+	 ram_data_d[7] = ram_data_q[7];
+	 end
 	 end
 /*
+
     if (ctr_d == ctr_q) begin
     //Default values just to prevent latches
     ram_data_d[2] = ram_data_q[2];
@@ -91,6 +101,19 @@ module message_ram (
   end
 
   always @(posedge clk) begin
+	 if (rst) begin
+	 ram_data_q[7] <= 8'd0;
+    ram_data_q[6] <= 8'd0;
+    ram_data_q[5] <= 8'd0;
+    ram_data_q[4] <= 8'd0;
+    ram_data_q[3] <= 8'd0;
+    ram_data_q[2] <= 8'd0;
+    ram_data_q[1] <= 8'd0;
+    ram_data_q[0] <= 8'd0;
+	 data_q <= 8'd0;
+	 ctr_q <= 4'b0000;
+	 end
+	 else begin
     //can't assign a packed type to unpacked type so individual registers/elements must be selected for ram_data
     ram_data_q[7] <= ram_data_d[7];
     ram_data_q[6] <= ram_data_d[6];
@@ -102,7 +125,7 @@ module message_ram (
     ram_data_q[0] <= ram_data_d[0];
     data_q <= data_d;
     ctr_q <= ctr_d;
-
+	 end
   end
 
 endmodule
