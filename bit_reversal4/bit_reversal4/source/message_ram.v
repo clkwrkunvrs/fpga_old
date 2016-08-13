@@ -33,8 +33,8 @@ module message_ram (
     ram_data_d[counter] = ram_data_q[counter];
     end
 
-	 //define default values
-	 else if (!new_rx_data) begin
+	 //define default values 
+	 /*else if (!new_rx_data) begin
 	 ram_data_d[0] = ram_data_q[0];
 	 ram_data_d[1] = ram_data_q[1];
 	 ram_data_d[2] = ram_data_q[2];
@@ -43,39 +43,8 @@ module message_ram (
 	 ram_data_d[5] = ram_data_q[5];
 	 ram_data_d[6] = ram_data_q[6];
 	 ram_data_d[7] = ram_data_q[7];
+	 end*/
 	 end
-	 end
-/*
-
-    if (ctr_d == ctr_q) begin
-    //Default values just to prevent latches
-    ram_data_d[2] = ram_data_q[2];
-    ram_data_d[1] = ram_data_q[1];
-    ram_data_d[0] = ram_data_q[0];
-    //this is where you store keyboard input
-    ram_data_d[ctr_q] = byte_in[8 * ctr_q + 7-:8];
-    ctr_d = ctr_q + 2'd1;
-    end
-
-
-    else if(ctr_d == 2'd3) begin
-    ctr_d = 2'd0;
-    ram_data_d[2] = ram_data_q[2];
-    ram_data_d[1] = ram_data_q[1];
-    ram_data_d[0] = ram_data_q[0];
-    end
-
-    else begin
-    ctr_d = ctr_q;
-    ram_data_d[2] = ram_data_q[2];
-    ram_data_d[1] = ram_data_q[1];
-    ram_data_d[0] = ram_data_q[0];
-    //if the counter is full, reset it.  Otherwise, increment after each byte has been stored (3 keyboard bytes/inputs in the current design)
-    //ctr_d = (ctr_d == 2'd3) ? 0 : ctr_q + 2'd1;
-   end*/
-
-
-
 
  //THIS IS WHERE THE BYTES GET REVERSED
  //continuously assign a value to the ram_wire.  When the full 3 bytes have been stored, message_printer shoudl signal this module to output them in reverse order

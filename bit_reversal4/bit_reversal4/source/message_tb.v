@@ -18,7 +18,7 @@ module message_tb;
 	 rx_data = "1";
 
 	 //2
-    #50
+    #100
 	 new_rx_data = 1;
     rx_data = "0";
 	 //wait to set the new input flag back to zero after input has been processed.
@@ -26,44 +26,44 @@ module message_tb;
 	 new_rx_data = 0;
 
 	 //3
-	 #50
+	 #100
 	 new_rx_data = 1;
     rx_data = "1";
 	 #1
 	 new_rx_data = 0;
 
 	 //4
-    #50
+    #100
     new_rx_data = 1;
     rx_data = "0";
 	 #1
 	 new_rx_data = 0;
 
 	 //5
-	 #50
+	 #100
 	 new_rx_data = 1;
     rx_data = "1";
 	 #1
 	 new_rx_data = 0;
 
 	 //6
-	 #50
+	 #100
 	 new_rx_data = 1;
 	 rx_data ="0";
 	 #1
 	 new_rx_data = 0;
 
 	 //7
-	 #50
+	 #100
 	 new_rx_data = 1;
 	 rx_data = "1";
 	 #1
 	 new_rx_data = 0;
 
 	 //8
-	 #50
+	 #100
 	 new_rx_data = 1;
-	 rx_data = "0";
+	 rx_data = "1";
 	 #1
 	 new_rx_data = 0;
 
