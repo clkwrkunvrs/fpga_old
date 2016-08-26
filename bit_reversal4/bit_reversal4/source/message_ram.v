@@ -23,18 +23,23 @@ module message_ram (
   //THIS BLOCK KEEPS ADDING ALL SIGNALS TO SENSITIVITY LIST BUT I DON'T WANT THEM ALL IN SENSITIVITY LIST
   //when you get a keyboard value, increment a counter and assign those 8 byte (fram byte_in) to a register
     always @(*) begin
+	 
     //if (addr > 1) begin
 	 if (new_rx_data) begin
+	 
 	 if (byte_in == 1)
     ram_data_d[counter] = "1";
+	 
     else if (byte_in == 0)
     ram_data_d[counter] = "0";
+	 
     else
     ram_data_d[counter] = ram_data_q[counter];
     end
 
-	 //define default values 
-	 /*else if (!new_rx_data) begin
+	 //define default values
+	 
+	 else if (counter < 4'b0001) begin
 	 ram_data_d[0] = ram_data_q[0];
 	 ram_data_d[1] = ram_data_q[1];
 	 ram_data_d[2] = ram_data_q[2];
@@ -43,19 +48,56 @@ module message_ram (
 	 ram_data_d[5] = ram_data_q[5];
 	 ram_data_d[6] = ram_data_q[6];
 	 ram_data_d[7] = ram_data_q[7];
-	 end*/
 	 end
+	 
+	 /*else
+	ram_data_d[counter] = ram_data_q[counter];
+	 */
+	 end
+	 
+	 
+/*
+
+    if (ctr_d == ctr_q) begin
+    //Default values just to prevent latches
+    ram_data_d[2] = ram_data_q[2];
+    ram_data_d[1] = ram_data_q[1];
+    ram_data_d[0] = ram_data_q[0];
+    //this is where you store keyboard input
+    ram_data_d[ctr_q] = byte_in[8 * ctr_q + 7-:8];
+    ctr_d = ctr_q + 2'd1;
+    end
+
+
+    else if(ctr_d == 2'd3) begin
+    ctr_d = 2'd0;
+    ram_data_d[2] = ram_data_q[2];
+    ram_data_d[1] = ram_data_q[1];
+    ram_data_d[0] = ram_data_q[0];
+    end
+
+    else begin
+    ctr_d = ctr_q;
+    ram_data_d[2] = ram_data_q[2];
+    ram_data_d[1] = ram_data_q[1];
+    ram_data_d[0] = ram_data_q[0];
+    //if the counter is full, reset it.  Otherwise, increment after each byte has been stored (3 keyboard bytes/inputs in the current design)
+    //ctr_d = (ctr_d == 2'd3) ? 0 : ctr_q + 2'd1;
+   end*/
+
+
+
 
  //THIS IS WHERE THE BYTES GET REVERSED
  //continuously assign a value to the ram_wire.  When the full 3 bytes have been stored, message_printer shoudl signal this module to output them in reverse order
- assign ram_wire[0] = ram_data_q[7];
- assign ram_wire[1] = ram_data_q[6];
- assign ram_wire[2] = ram_data_q[5];
- assign ram_wire[3] = ram_data_q[4];
- assign ram_wire[4] = ram_data_q[3];
- assign ram_wire[5] = ram_data_q[2];
- assign ram_wire[6] = ram_data_q[1];
- assign ram_wire[7] = ram_data_q[0];
+ assign ram_wire[0] = ram_data_d[7];
+ assign ram_wire[1] = ram_data_d[6];
+ assign ram_wire[2] = ram_data_d[5];
+ assign ram_wire[3] = ram_data_d[4];
+ assign ram_wire[4] = ram_data_d[3];
+ assign ram_wire[5] = ram_data_d[2];
+ assign ram_wire[6] = ram_data_d[1];
+ assign ram_wire[7] = ram_data_d[0];
  assign ram_wire[8] = "\n";
  assign ram_wire[9] = "\r";
 
@@ -82,6 +124,7 @@ module message_ram (
 	 data_q <= 8'd0;
 	 ctr_q <= 4'b0000;
 	 end
+	 
 	 else begin
     //can't assign a packed type to unpacked type so individual registers/elements must be selected for ram_data
     ram_data_q[7] <= ram_data_d[7];
