@@ -41,22 +41,33 @@ module seven_seg_rtc(
     //figure out how large this counter needs to be
     reg [26:0] counter_d, counter_q;
     reg [6:0] segments_d, segments_q;
+    
+    localparam UP = 1'b0, DOWN = 1'b1; //counting up or down
+    localparam ZERO = 5'd0, ONE = 5'd1, //current number output
+               TWO = 5'd2, THREE = 5'd3,
+               FOUR = 5'd4, FIVE = 5'd5,
+               SIX = 5'd6, SEVEN = 5'd7,
+               EIGHT = 5'd8, NINE = 5'd9,
+               TEN = 5'd10, ELEVEN = 5'd11,
+               TWELVE = 5'd12, THIRTEEN = 5'd13,
+               FOURTEEN = 5'd14, FIFTEEN = 5'd15,
+               SIXTEEN = 5'd16;
 
     always @(*) begin
     
       if (counter_q == 27'd100000000) begin //assuming a 100 MHz clock rate, the counter should reach this value once a second
-        if (state_q < 5'd16 && direction_state_q == 1'b0) begin
+        if (state_q < SIXTEEN && direction_state_q == UP) begin
          direction_state_d = direction_state_q;
          state_d = state_q + 5'd1;
          counter_d = 27'd0;
          end
-        else if (state_q == 5'd0 && direction_state_q == 1'b1) begin
-        direction_state_d = 1'b0;
+        else if (state_q == ZERO && direction_state_q == DOWN) begin
+        direction_state_d = UP;
         state_d = state_q + 5'd1;
         counter_d = 27'd0;
         end
         else begin //if the display is on 'F', change the state and start counting backwards
-            if (direction_state_q == 1'b0) direction_state_d = 1'b1;
+            if (direction_state_q == UP) direction_state_d = DOWN;
             
             else direction_state_d = direction_state_q;
         state_d = state_q - 5'd1;
@@ -75,78 +86,80 @@ module seven_seg_rtc(
 
       //states
       //make this into a switch statement
-      if (state_q == 5'd0) begin //'0'
+      case (state_q)
+      ZERO: begin //'0'
         segments_d = 7'b1111110;
       end
 
-      else if (state_q == 5'd1) begin //'1'
+      ONE: begin //'1'
         segments_d = 7'b0110000;
       end
 
-      else if (state_q == 5'd2) begin //'2'
+      TWO: begin //'2'
         segments_d = 7'b1101101;
       end
 
-      else if (state_q == 5'd3) begin //'3'
+      THREE: begin //'3'
         segments_d = 7'b1111001;
       end
 
-      else if (state_q == 5'd4) begin //'4'
+      FOUR: begin //'4'
          segments_d = 7'b0110011;
       end
 
-      else if (state_q == 5'd5) begin //'5'
+      FIVE: begin //'5'
         segments_d = 7'b1011011;
       end
       
-      else if (state_q == 5'd6) begin //'6'
+      SIX: begin //'6'
           segments_d =7'b1011111;
       end
       
-      else if (state_q == 5'd7) begin //'7'
+      SEVEN: begin //'7'
         segments_d = 7'b1110000;
       end
       
-      else if (state_q == 5'd8) begin //'8'
+      EIGHT: begin //'8'
         segments_d = 7'b1111111;
        end
        
-       else if (state_q == 5'd9) begin //'9'
+      NINE: begin //'9'
         segments_d = 7'b1110011;
        end
        
-       else if (state_q == 5'd10) begin //'A'
+      TEN: begin //'A'
         segments_d = 7'b1110111;
        end
        
-       else if (state_q == 5'd11) begin //'b'
+      ELEVEN: begin //'b'
        segments_d = 7'b0011111;
        end
        
-       else if (state_q == 5'd12) begin //'C'
+      TWELVE: begin //'C'
        segments_d = 7'b1001110;
        end
        
-       else if (state_q == 5'd13) begin //'d'
+      THIRTEEN: begin //'d'
        segments_d = 7'b0111101;
        end
        
-       else if (state_q == 5'd14) begin //'E'
+      FOURTEEN: begin //'E'
        segments_d = 7'b1001111;
        end
        
-       else if (state_q == 5'd15) begin //'F'
+      FIFTEEN: begin //'F'
        segments_d = 7'b1000111;
        end
 
-      else segments_d = segments_q;
+      default: segments_d = segments_q;
+    endcase
     end
 
     always @(posedge clk) begin
     if (rst) begin
     counter_q <= 26'd0;
-    state_q <= 5'd0;
-    direction_state_q <= 1'b0;
+    state_q <= ZERO;
+    direction_state_q <= UP;
     segments_q <= 7'd0;
     end
 
