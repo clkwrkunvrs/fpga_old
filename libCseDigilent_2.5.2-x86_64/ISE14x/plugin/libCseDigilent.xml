@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright (c) 2007 Xilinx, Inc.  All rights reserved. -->
+<CsePlugin>
+    <fullname>Digilent Plug-in</fullname>
+    <libname>libCseDigilent</libname>
+    <vendor>Digilent</vendor>
+    <version>2.5.2</version>
+    <description>This plug-in is an interface to the Digilent Adept Runtime libraries that provide access to Digilent devices.</description>
+    <targets>
+        <target>
+            <fullname>Digilent Device Plugin</fullname>
+            <targetname>digilent_plugin</targetname>
+            <description>Leave the device field blank to display a list of connected Digilent devices.  If only one device is connected, it will automatically be opened.</description>
+            <guivisible>true</guivisible>
+            <arguments>
+                <argument>
+                    <key displayname="Speed">frequency</key>
+                    <validvalues>
+                        <validvalue displayname="125 KHz">125000</validvalue>
+                        <validvalue displayname="250 KHz">250000</validvalue>
+                        <validvalue displayname="500 KHz">500000</validvalue>
+                        <validvalue displayname="1 MHz">1000000</validvalue>
+                        <validvalue displayname="2 MHz">2000000</validvalue>
+                        <validvalue displayname="3 MHz">3000000</validvalue>
+                        <validvalue displayname="4 MHz">4000000</validvalue>
+                        <validvalue displayname="6 MHz">6000000</validvalue>
+                        <validvalue displayname="7.5 MHz">7500000</validvalue>
+                        <validvalue displayname="10 MHz">10000000</validvalue>
+                        <validvalue displayname="15 MHz">15000000</validvalue>
+                        <validvalue displayname="30 MHz">30000000</validvalue>
+                        <validvalue displayname="default" default="1">0</validvalue>
+                    </validvalues>
+                    <!-- guicontroltype should be one of the following
+					     and are only used as suggestions:
+					     checkbox, radiobutton, combobox, list,
+					     slider, spinner, textfield, passwordfield -->
+                    <guicontroltype>combobox</guicontroltype>
+                </argument>
+                <argument>
+                    <key displayname="Device">device</key>
+                    <validvalues>
+                        <!-- validvalue can be a single value (ex: 200), a value
+					         range (ex: 1-200), or when none is specified the
+					         application assumes a string input -->
+                    </validvalues>
+                    <!-- guicontroltype should be one of the following
+					     and are only used as suggestions:
+					     checkbox, radiobutton, combobox, list,
+					     slider, spinner, textfield, passwordfield -->
+                    <guicontroltype>textfield</guicontroltype>
+                </argument>
+            </arguments>
+        </target>
+    </targets>
+</CsePlugin>

@@ -1,0 +1,24 @@
+CommandLine-Map
+
+s
+CommandLine-Ngdbuild
+/build/xfndry/L.33/rtf/bin/lin/unwrapped/ngdbuild -ise ../__xps/ise/system.ise -p xc3s100ecp132-4 -nt timestamp -bm system.bmm /group/xrlabs/phartke/bluetooth/nexys2/basys2/implementation/system.ngc -uc system.ucf system.ngd
+s
+CommandLine-Par
+
+s
+CommandLine-Xst
+
+s
+Previous-NGD
+
+s
+Previous-NGM
+
+s
+Previous-Packed-NCD
+
+s
+Previous-Routed-NCD
+
+s

@@ -1,0 +1,32 @@
+Net fpga_0_LEDs_8Bit_GPIO_IO_O_pin<7> LOC= G1;
+Net fpga_0_LEDs_8Bit_GPIO_IO_O_pin<6> LOC= P4;
+Net fpga_0_LEDs_8Bit_GPIO_IO_O_pin<5> LOC= N4;
+Net fpga_0_LEDs_8Bit_GPIO_IO_O_pin<4> LOC= N5;
+Net fpga_0_LEDs_8Bit_GPIO_IO_O_pin<3> LOC= P6;
+Net fpga_0_LEDs_8Bit_GPIO_IO_O_pin<2> LOC= P7;
+Net fpga_0_LEDs_8Bit_GPIO_IO_O_pin<1> LOC= M11;
+Net fpga_0_LEDs_8Bit_GPIO_IO_O_pin<0> LOC= M5;
+Net fpga_0_Push_Buttons_3Bit_GPIO_IO_I_pin<2> LOC= C11;
+Net fpga_0_Push_Buttons_3Bit_GPIO_IO_I_pin<1> LOC= M4;
+Net fpga_0_Push_Buttons_3Bit_GPIO_IO_I_pin<0> LOC= A7;
+Net fpga_0_Switches_8Bit_GPIO_IO_I_pin<7> LOC= P11;
+Net fpga_0_Switches_8Bit_GPIO_IO_I_pin<6> LOC= L3;
+Net fpga_0_Switches_8Bit_GPIO_IO_I_pin<5> LOC= K3;
+Net fpga_0_Switches_8Bit_GPIO_IO_I_pin<4> LOC= B4;
+Net fpga_0_Switches_8Bit_GPIO_IO_I_pin<3> LOC= G3;
+Net fpga_0_Switches_8Bit_GPIO_IO_I_pin<2> LOC= F3;
+Net fpga_0_Switches_8Bit_GPIO_IO_I_pin<1> LOC= E2;
+Net fpga_0_Switches_8Bit_GPIO_IO_I_pin<0> LOC= N3;
+#Net fpga_0_RS232_PORT_RX_pin LOC= U6  | PULLUP;
+#Net fpga_0_RS232_PORT_TX_pin LOC= P9  | DRIVE = 2;
+Net fpga_0_clk_1_sys_clk_pin TNM_NET = sys_clk_pin;
+TIMESPEC TS_sys_clk_pin = PERIOD sys_clk_pin 50000 kHz;
+Net fpga_0_clk_1_sys_clk_pin LOC= B8;
+Net fpga_0_rst_1_sys_rst_pin TIG;
+Net fpga_0_rst_1_sys_rst_pin LOC= G12;
+
+NET "fpga_0_Push_Buttons_3Bit_GPIO_IO_I_pin<0>" CLOCK_DEDICATED_ROUTE = FALSE;
+NET "fpga_0_Push_Buttons_3Bit_GPIO_IO_I_pin<1>" CLOCK_DEDICATED_ROUTE = FALSE;
+NET "fpga_0_Push_Buttons_3Bit_GPIO_IO_I_pin<2>" CLOCK_DEDICATED_ROUTE = FALSE;
+NET "fpga_0_clk_1_sys_clk_pin" CLOCK_DEDICATED_ROUTE = FALSE;
+

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IMPORTANT: This is an internal file that has been generated
+     by the Xilinx ISE software.  Any direct editing or
+     changes made to this file may result in unpredictable
+     behavior or data corruption.  It is strongly advised that
+     users do not edit the contents of this file. -->
+<messages>
+<msg type="warning" file="LIT" num="243" delta="old" >Logical network <arg fmt="%s" index="1">bscan_reset</arg> has no load.
+</msg>
+
+<msg type="warning" file="LIT" num="395" delta="new" >The above <arg fmt="%s" index="1">warning</arg> message <arg fmt="%s" index="2">base_net_load_rule</arg> is repeated <arg fmt="%d" index="3">354</arg> more times for the following (max. 5 shown):
+<arg fmt="%s" index="4">ilmb_LMB_ReadStrobe,
+mb_plb_PLB_ABus&lt;30&gt;,
+mb_plb_PLB_ABus&lt;31&gt;,
+mb_plb_PLB_BE&lt;0&gt;,
+mb_plb_PLB_BE&lt;1&gt;</arg>
+To see the details of these <arg fmt="%s" index="5">warning</arg> messages, please use the -detail switch.
+</msg>
+
+<msg type="info" file="MapLib" num="562" delta="old" >No environment variables are currently set.
+</msg>
+
+<msg type="info" file="LIT" num="244" delta="old" >All of the single ended outputs in this design are using slew rate limited output drivers. The delay on speed critical single ended outputs can be dramatically reduced by designating them as fast outputs.
+</msg>
+
+<msg type="warning" file="LIT" num="176" delta="old" >Clock buffer is designated to drive clock loads. <arg fmt="%s" index="1">BUFGMUX symbol &quot;physical_group_fpga_0_Push_Buttons_3Bit_GPIO_IO_I_pin_0_BUFGP/fpga_0_Push_Buttons_3Bit_GPIO_IO_I_pin_0_BUFGP/BUFG&quot; (output signal=fpga_0_Push_Buttons_3Bit_GPIO_IO_I_pin_0_BUFGP)</arg> has a mix of clock and non-clock loads. The non-clock loads are:
+<arg fmt="%s" index="2">Pin I0 of chipscope_vio_0/chipscope_vio_0/i_chipscope_vio_0/U0/I_VIO/GEN_ASYNC_IN[2].ASYNC_IN_CELL/USER_MUX</arg>
+</msg>
+
+<msg type="warning" file="LIT" num="176" delta="old" >Clock buffer is designated to drive clock loads. <arg fmt="%s" index="1">BUFGMUX symbol &quot;physical_group_fpga_0_Push_Buttons_3Bit_GPIO_IO_I_pin_1_BUFGP/fpga_0_Push_Buttons_3Bit_GPIO_IO_I_pin_1_BUFGP/BUFG&quot; (output signal=fpga_0_Push_Buttons_3Bit_GPIO_IO_I_pin_1_BUFGP)</arg> has a mix of clock and non-clock loads. The non-clock loads are:
+<arg fmt="%s" index="2">Pin I0 of chipscope_vio_0/chipscope_vio_0/i_chipscope_vio_0/U0/I_VIO/GEN_ASYNC_IN[1].ASYNC_IN_CELL/USER_MUX</arg>
+</msg>
+
+<msg type="warning" file="LIT" num="176" delta="old" >Clock buffer is designated to drive clock loads. <arg fmt="%s" index="1">BUFGMUX symbol &quot;physical_group_fpga_0_Push_Buttons_3Bit_GPIO_IO_I_pin_2_BUFGP/fpga_0_Push_Buttons_3Bit_GPIO_IO_I_pin_2_BUFGP/BUFG&quot; (output signal=fpga_0_Push_Buttons_3Bit_GPIO_IO_I_pin_2_BUFGP)</arg> has a mix of clock and non-clock loads. The non-clock loads are:
+<arg fmt="%s" index="2">Pin I0 of chipscope_vio_0/chipscope_vio_0/i_chipscope_vio_0/U0/I_VIO/GEN_ASYNC_IN[0].ASYNC_IN_CELL/USER_MUX</arg>
+</msg>
+
+<msg type="info" file="LIT" num="66" delta="old" >BUFGMUX chain detected. Two or more BUFMGUXs are connected in series. Because non-standard routing resources must be used to connect the BUFGMUXs, this chain can result in: 1) skew between the clocks derived from outputs of different stages of this chain, and/or 2) skew between the resulting clock and clocks that use other BUFGMUX paths.
+</msg>
+
+<msg type="info" file="Pack" num="1716" delta="old" >Initializing temperature to <arg fmt="%0.3f" index="1">85.000</arg> Celsius. (default - Range: <arg fmt="%0.3f" index="2">-40.000</arg> to <arg fmt="%0.3f" index="3">100.000</arg> Celsius)
+</msg>
+
+<msg type="info" file="Pack" num="1720" delta="old" >Initializing voltage to <arg fmt="%0.3f" index="1">1.140</arg> Volts. (default - Range: <arg fmt="%0.3f" index="2">1.140</arg> to <arg fmt="%0.3f" index="3">1.320</arg> Volts)
+</msg>
+
+<msg type="info" file="Timing" num="3386" delta="old" >Intersecting Constraints found and resolved.  For more information, see the TSI report.  Please consult the Xilinx Command Line Tools User Guide for information on generating a TSI report.</msg>
+
+<msg type="warning" file="Place" num="1019" delta="old" >A clock IOB / clock component pair have been found that are not placed at an optimal clock IOB / clock site pair. The clock component &lt;<arg fmt="%s" index="1">fpga_0_Push_Buttons_3Bit_GPIO_IO_I_pin_2_BUFGP/BUFG</arg>&gt; is placed at site &lt;<arg fmt="%s" index="2">BUFGMUX_X2Y10</arg>&gt;. The IO component &lt;<arg fmt="%s" index="3">fpga_0_Push_Buttons_3Bit_GPIO_IO_I_pin&lt;2&gt;</arg>&gt; is placed at site &lt;<arg fmt="%s" index="4">C11</arg>&gt;.  This will not allow the use of the fast path between the IO and the Clock buffer. This is normally an ERROR but the CLOCK_DEDICATED_ROUTE constraint was applied on COMP.PIN &lt;<arg fmt="%s" index="5">fpga_0_Push_Buttons_3Bit_GPIO_IO_I_pin&lt;2&gt;.PAD</arg>&gt; allowing your design to continue. This constraint disables all clock placer rules related to the specified COMP.PIN. The use of this override is highly discouraged as it may lead to very poor timing results. It is recommended that this error condition be corrected in the design.
+</msg>
+
+<msg type="warning" file="Place" num="1013" delta="old" >A clock IOB / DCM component pair have been found that are not placed at an optimal clock IOB / DCM site pair.  The clock component &lt;<arg fmt="%s" index="1">clock_generator_0/clock_generator_0/Using_DCM0.DCM0_INST/DCM_INST/Using_Virtex.DCM_INST</arg>&gt; is placed at site &lt;<arg fmt="%s" index="2">DCM_X0Y1</arg>&gt;.  The clock IO/DCM site can be paired if they are placed/locked in the same quadrant.  The IO component &lt;<arg fmt="%s" index="3">fpga_0_clk_1_sys_clk_pin</arg>&gt; is placed at site &lt;<arg fmt="%s" index="4">B8</arg>&gt;.  This will not allow the use of the fast path between the IO and the Clock buffer. This is normally an ERROR but the CLOCK_DEDICATED_ROUTE constraint was applied on COMP.PIN &lt;<arg fmt="%s" index="5">fpga_0_clk_1_sys_clk_pin.PAD</arg>&gt; allowing your design to continue. This constraint disables all clock placer rules related to the specified COMP.PIN. The use of this override is highly discouraged as it may lead to very poor timing results. It is recommended that this error condition be corrected in the design.
+</msg>
+
+<msg type="info" file="Pack" num="1650" delta="new" >Map created a placed design.
+</msg>
+
+<msg type="warning" file="PhysDesignRules" num="367" delta="new" >The signal &lt;<arg fmt="%s" index="1">dlmb_LMB_ABus&lt;30&gt;</arg>&gt; is incomplete. The signal does not drive any load pins in the design.
+</msg>
+
+<msg type="warning" file="PhysDesignRules" num="367" delta="new" >The signal &lt;<arg fmt="%s" index="1">dlmb_LMB_ABus&lt;31&gt;</arg>&gt; is incomplete. The signal does not drive any load pins in the design.
+</msg>
+
+</messages>
+

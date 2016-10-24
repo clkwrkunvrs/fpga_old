@@ -1,0 +1,207 @@
+Digilent Adept Runtime for Linux Change Log
+===========================================
+
+Adept Runtime for Linux 2.16.5 (03/17/2016):
+    1. Fixed a bug that may have prevented proper library initialization on
+       some distributions. The only distribution know to be affected by
+       this bug is Redhat 5.9.
+    2. Added the ability to configure the XC7A15T (Cmod A7). This part may
+       now be configured using the "djtgcfg" application.
+
+Adept Runtime for Linux 2.16.4 (01/21/2016):
+    1. Modified JTSC to add support for .bin files when configuring an FPGA
+       target. The "djtgcfg" application, which is part of the Adept
+       Utilities Suite, will now accepts bin files (bitstreams that lack
+       the normal Xilinx header) and use them to configure the target FPGA.
+
+Adept Runtime for Linux 2.16.1 (10/02/2014):
+    1. Changed the default installation location of libraries from
+       "/usr/local/lib/digilent/adept" to "/usr/lib/digilent/adept".
+    2. Changed the default installation location of data files from
+       "/usr/local/share/digilent/data" to
+       "/usr/share/digilent/adept/data".
+    3. Changed the default installation location of system binaries from
+       "/usr/local/sbin" to "/usr/sbin".
+    4. Added the ability to configure the XC7A35T (Basys 3), XC7A100T
+       (Nexys 4), XC7A200T (Atlys 2), XC7K325T (Genesys 2), XC7Z010 (Zybo),
+       and XC7Z020 (Zed). These parts may now be configured using the
+       "djtgcfg" application.
+    5. Fixed a bug that caused the JTAG-HS2 and JTAG-SMT2 to ocasionally
+       output the wrong sequence on the TMSC and TCKC pins when DjtgEscape
+       was called.
+    6. Updated Nexys 3, Atlys, Electronics Explorer, FMC Carrier S6, and
+       NetFPGA-1G-CML firmware to fix a bug that caused those devices to
+       stop responding when the USB cable was disconnected and reconnected
+       without power cycling the board.
+
+Adept Runtime for Linux 2.15.9 (03/03/2014):
+    1. Added the ability to specify the path Digilent data directory using
+       the "DIGILENT_DATA_DIR" environment variable. If this environment
+       variable is set then the Runtime will not attempt to parse the path
+       to the data directory from the Adept Runtime Configuration File and
+       will function properly even if the configuration file isn't present.
+
+Adept Runtime for Linux 2.15.3 (01/20/2014):
+    1. Fixed bug that could result in an available interface failing to be
+       locked.
+
+Adept Runtime for Linux 2.15.2 (01/03/2014):
+    1. Modified the implementation of the data transport protocol used by
+       certain devices (Basys, Nexys 2, Nexys 3, Atlys, Genesys, JTAG-USB
+       Cable, and Electronics Explorer) to reduce CPU utilization.
+    2. Updated JTAG-USB Cable firmware to fix a bug that previously
+       resulted in the device's JTAG port becoming inaccessible after an
+       application crash while the port was enabled.
+    3. Increased the default transaction timeout from 10 seconds to 30
+       seconds.
+
+Adept Runtime for Linux 2.15.1 (11/27/2013):
+    1. Added the ability to enable error logging by setting the
+       "ADEPT_RT_LOGDETAIL" environment variable to a value greater than
+       or equal to '1'. Presently all values greater than '0' result in the
+       same output to the log file. Future revision may include the ability
+       to output additional debug information by setting different error
+       levels.
+    2. Added the ability to specify the path to the error log file by
+       setting the "ADEPT_RT_LOGFILE" environment variable. If error
+       logging is enabled and the path has been specified then any errors
+       that occur will be logged to the specified file. If error logging is
+       enabled and the "ADEPT_RT_LOGFILE" environment variable has not been
+       set then any errors that occur will be logged to a file named
+       "DebugErc.log", which will be created under the application's
+       current working directory.
+    3. Modified the Runtime libraries such that initialization errors no
+       longer cause LoadLibrary/dlopen to return an error or the
+       application to exit. If an initializatoin error occurs then an error
+       code is set and the Runtime is marked as uninitialized. Any attempt
+       to call a Runtime function results in FALSE being returned. The
+       application may determine the cause of the error by calling the
+       DmgrGetLastError function. An error code and and description will
+       also be output the error log, provided that logging is enabled.
+    4. Modified the Runtime libraries such that the ftdi_sio driver is no
+       longer detached from Digilent USB devices the first time the
+       libraries are loaded into memory. Setting environment variable
+       "ADEPT_NO_KRNDRV_DETACH" no longer has any effect on functionality.
+    5. Modified the way that device locking is implemented in order to fix
+       a bug that could cause an on-going data transfer to fail in
+       multi-applicaton environments. Due to the requirements of this
+       modification CentOS 4 and Red Hat Enterprise Linux 4 are no longer
+       supported.
+
+Adept Runtime for Linux 2.15.0 (09/11/2013):
+    1. Extended the DJTG API set to include the following functions:
+       DjtgGetGpioMask, DjtgSetGpioDir, DjtgGetGpioDir, DjtgSetGpioState,
+       and DjtgGetGpioState. Please note that not all of Digilent's
+       programming solutions support these functions.
+    2. Added support for DjtgGetGpioMask, DjtgSetGpioDir, DjtgGetGpioDir,
+       DjtgSetGpioState, and DjtgGetGpioState to JTAG-SMT2 firmware.
+    3. Added support for DjtgBatch commands jcbGetGpioMask, jcbSetGpioDir,
+       jcbGetGpioDir, jcbSetGpioState, and jcbGetGpioState to JTAG-SMT2
+       firmware.
+
+Adept Runtime for Linux 2.14.3 (08/21/2013):
+    1. Removed libusb 1.0.9 dependency to improve compatibility with older
+       distributions
+    2. Added the ability to prevent the Adept Runtime from attempting to
+       detach the ftdi_sio driver when the libraries are first loaded into
+       memory by setting the environment variable
+       "ADEPT_NO_KRNDRV_DETACH=1". For more information please see the
+       "Known Issues" section of the README file.
+
+Adept Runtime for Linux 2.13.1 (04/19/2013):
+    1. Modified "52-digilent-usb.rules" and "install.sh" such that ":=" is
+       used instead of "=" when assigning MODE permissions. Using the ":="
+       syntax prevents other UDEV rule files from changing the permissions
+       that are set for Digilent USB devices. This should prevent the need
+       to modify "52-digilent-usb.rules" or any other UDEV rule files after
+       installation.
+    2. Internally modified the way that device enumeration is performed to
+       fix a bug that could cause an on-going data transfer in one process
+       to fail when another process performed enumeration. This bug
+       affected the JTAG-HS1, JTAG-HS2, JTAG-SMT1, JTAG-SMT2, Zed,
+       JTAG-ONSB1, JTAG-ONB2, JTAG-ONB3, and JTAG-ONB4. Previously it was
+       possible to observe such failures by performing device enumeration
+       in ChipScope while iMPACT was in the middle of performing indirect
+       programming of flash memory.
+
+Adept Runtime for Linux 2.12.1 (02/22/2013):
+    1. Changed the way that the ftdi_sio driver is detached from devices.
+       All previous versions of the Adept Runtime detached the driver from
+       all interfaces (channels) of a Digilent device when it was connected
+       to the host. This version of Adept Runtime only detaches the driver
+       for interfaces (channels) that aren't configured to use the Virtual
+       Comm Port (VCP) driver. This allows users to access the JTAG scan
+       chain and VCP of the Anvyl simultaneously.
+
+Adept Runtime for Linux 2.11.2 (01/10/2013):
+    1. Modified the data transport protocol used by certain devices
+       (JTAG-HS1, JTAG-HS2, JTAG-SMT1, JTAG-SMT2, Zed, JTAG-ONB1,
+       JTAG-ONB2, JTAG-ONB3, JTAG-ONB4) to improve performance and reduce
+       CPU utilization.
+
+Adept Runtime for Linux 2.11.1 (12/19/2012):
+    1. Extended the DJTG API set to include the following functions:
+       DjtgBatch, DjtgGetBatchProperties, and DjtgSetAuxReset. Please note
+       that not all of Digilent's programming solutions support these
+       functions.
+
+Adept Runtime for Linux 2.10.4 (11/13/2012):
+    1. Added support for new USB devices: JTAG-ONB2, JTAG-ONB3, and
+       JTAG-ONB4.
+
+Adept Runtime for Linux 2.10.3 (08/15/2012):
+    1. Added the ability to place the Adept Runtime Configuration File in a
+       user specified location. The path to the configuration file may now
+       be specified using the "DIGILENT_ADEPT_CONF" or
+       "XLNX_DIGILENT_ADEPT_CONF" environment variables. If neither of
+       these environment variables specify a path for the configuration
+       file then the Runtime attemps to open and parse
+       "/etc/digilent-adept.conf" as the configuration file.
+    2. Modified install script to no longer required superuser (root)
+       privileges for installation.
+    3. Modified install script to prompt for location in which the Adept
+       Configuration file is installed when the script isn't execute in
+       silent mode.
+
+Adept Runtime for Linux 2.10.2 (07/12/2012):
+    1. Added support for IEEE 1149.7-2009 by extending the DJTG API set to
+       include the following functions: DjtgSetScanFormat,
+       DjtgGetScanFormat, DjtgSetReadyCnt, DjtgGetReadyCnt,
+       DjtgSetDelayCnt, DjtgGetDelayCnt, DjtgCheckPacket, and DjtgEscape.
+       Please note that not all of Digilent's programming solutions are
+       capable of interfacing with IEEE 1149.7-2009 targets.
+    2. Added IEEE 1149.7-2009 for the JTAG-HS2 and JTAG-SMT2.
+    3. Modified the UDEV rules file ("52-digilent-usb.rules") to use the
+       "ATTR{}" syntax for matching SYSFS attributes. Previously the
+       "SYSFS{}" syntax was used for matching SYSFS attributes, which
+       resulted in users being required to have superuser privileges when
+       accessing Digilent USB devices on distributions running UDEV version
+       174 or newer (Fedora 17 and Ubuntu 12.04). While not officially
+       supported, this version of the Adept Runtime for Linux has been
+       confirmed to work with Fedora 17 and Ubuntu 12.04.
+    4. Modified install script ("install.sh") to detect which version of
+       UDEV is installed and install a UDEV rules file that uses the
+       "SYSFS{}" syntax for matching SYSFS attributes when appropriate
+       (UDEV versions prior to 098).
+
+Adept Runtime for Linux 2.9.9 (04/06/2012):
+    1. Fixed a bug that caused a segfault under distributions running
+       Kernel 3. While not officially supported, the Adept Runtime for
+       Linux has been confirmed to work with Fedora 16 and Ubuntu 11.10
+       after this bugfix was implemented.
+
+Adept Runtime for Linux 2.9.8 (03/29/2012):
+    1. Fixed a bug that was preventing multiple users from opening a handle
+       to the same device.
+
+Adept Runtime for Linux 2.9.7 (03/27/2012):
+    1. Fixed a bug that caused inconsistent behavior while using GDB to
+       debug applications that were linked against the Runtime.
+
+Adept Runtime for Linux 2.9.6 (03/09/2012):
+    1. Added support for new USB devices: JTAG-HS2, JTAG-SMT2, and ZED.
+    
+Adept Runtime for Linux 2.9.5 (02/17/2012):
+    1. Fixed a bug in install script that was causing the UDEV rules not to
+       be installed under distributions running Kernel 3.
+
