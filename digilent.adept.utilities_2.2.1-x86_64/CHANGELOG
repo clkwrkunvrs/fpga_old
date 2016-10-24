@@ -1,7 +1,0 @@
-Digilent Adept Utilities for Linux Change Log
-=============================================
-
-Adept Utilities for Linux 2.2.1 (11/17/2014):
-    1. Added "dsumecfg" application. This application can be used to write
-       bit or bin files to the flash memory on Digilent's NetFPGA-SUME.
-
