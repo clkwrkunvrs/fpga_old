@@ -81,6 +81,8 @@ end
     
 else begin
 state_q <= state_d;
+out_q <= out_d;
+Cout_q <= Cout_d;
 //ff2_q <= ff2_d;
 end
 end

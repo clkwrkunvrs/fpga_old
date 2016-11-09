@@ -23,11 +23,11 @@
 module One_shot(
     input PB,
     input CLK,
-    output EN
+    output ENos
     );
 
 reg X, Y, Z;
-assign EN = (Y)&(~Z);
+assign ENos = (Y)&(~Z);
 
 always @(posedge CLK) begin
     X <= PB;    
@@ -35,7 +35,5 @@ always @(posedge CLK) begin
     Z <= Y;
 end
     
-Moore Moore (
-    .EN(EN)
-    );
+
 endmodule

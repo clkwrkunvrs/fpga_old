@@ -20,23 +20,51 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module top(
-    input PBen,
-    input Clk,
+
+module top #(
+parameter M = 2,
+parameter N = 4
+) (
+    input PBen, CLK, PBrst,
     output [3:0] OUT,
-    output [1:0] Cout,    
-    input PBrst
+           [1:0] Cout,  
+    //ports for counter
+    input Din, CE,
+    input [1:0] Mu,
+    output Dout
     );
+    
+    wire EN;
+    wire PBdb;
+    
+Counter Counter (
+    .clk(CLK),
+    .rst(RST),
+    .CE(CE),
+    .Din(Din),
+    .Dout(Dout),
+    .M(Mu)
+    
+    );
+        
     
 Moore Moore (
     .CLK(CLK),
     .RST(PBrst),
     .OUT(OUT),
-    .Cout(Cout)
+    .Cout(Cout),
+    .EN(ENos)
     );
     
 One_shot One_shot (
     .CLK(CLK),
-    .EN(PBen)
+    .PB(PBdb),
+    .ENos(ENos)
+    );
+    
+Debounce Debounce (
+    .PB(PBen),
+    .CLK(CLK),
+    .PBdb(PBdb)
     );
 endmodule
